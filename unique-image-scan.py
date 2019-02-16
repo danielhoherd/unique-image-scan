@@ -25,7 +25,7 @@ def get_exif(file):
 def scan(scan, debug):
     files = list(pathlib.Path(scan).glob("**/[!.]*"))
     unique_exif = {}
-    common_exif = set()
+    common_exif = []
     c = 0
     total = len(files)
 
@@ -43,14 +43,14 @@ def scan(scan, debug):
         pprint.pprint(exif)
 
         for k, v in exif.items():
-            if v in unique_exif.get(k, set()):
+            if v in unique_exif.get(k, []):
                 # Key is not unique across files
                 print(f"Deleting key {k}: Not unique")
                 del unique_exif[k]
                 common_exif.append(k)
                 continue
             elif k not in common_exif:
-                unique_exif.setdefault(k, set()).add(v)
+                unique_exif.setdefault(k, []).append(v)
 
     pprint.pprint(unique_exif)
     print(unique_exif.keys())

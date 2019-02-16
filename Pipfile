@@ -10,6 +10,7 @@ click = "==7.0"
 PyExifTool = "==0.1.1"
 pre-commit = ">=1.14.3"
 exiftool = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"

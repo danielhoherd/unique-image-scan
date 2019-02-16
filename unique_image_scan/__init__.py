@@ -1,14 +1,13 @@
-#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
-import click
 import exiftool
 import pathlib
 import pprint
 
-# GOAL: iterate through all photos, find exif fields that are truly unique (which may or may not exist across all photos), get the names of those fields, combine that for primary_key - then with a dry run see if that presents any conflicts (eg. where there is still a duplicate detected despite combining unique fields together) - sound right?
 
-# time ./media_organizer.py --scan all/ > output.txt
+def debug(text):
+    if debug is True:
+        print("DEBUG: " + "-" * 60)
+        pprint.pprint(text)
 
 
 def get_exif(file):
@@ -19,28 +18,26 @@ def get_exif(file):
             print(f"Error reading exif with file: {file} {e}")
 
 
-@click.command()
-@click.option("--debug", help="Enable debug options", is_flag=True)
-@click.option("--scan", help="Files to scan", required=True)
-def scan(scan, debug):
-    files = list(pathlib.Path(scan).glob("**/[!.]*"))
+def scan_source_paths(source_paths):
+    for path in source_paths:
+        files = list(pathlib.Path(path).glob("**/[!.]*"))
     unique_exif = {}
     common_exif = []
-    c = 0
+    index = 0
     total = len(files)
 
     for file in files:
-        c += 1
+        index += 1
         if file.is_dir():
             continue
 
-        print(f"{c}/{total}: Running check on {file}")
+        print(f"{index}/{total} {index/total*100:.0f}%: Running check on {file}")
 
         exif = get_exif(str(file))
         if exif is None:
             continue
 
-        pprint.pprint(exif)
+        debug(exif)
 
         for k, v in exif.items():
             if v in unique_exif.get(k, []):
@@ -52,9 +49,7 @@ def scan(scan, debug):
             elif k not in common_exif:
                 unique_exif.setdefault(k, []).append(v)
 
-    pprint.pprint(unique_exif)
-    print(unique_exif.keys())
-
-
-if __name__ == "__main__":
-    scan()
+    debug(unique_exif)
+    print("Final Summary of keys with unique values: " + "-" * 80)
+    for key in unique_exif.keys():
+        print(key)

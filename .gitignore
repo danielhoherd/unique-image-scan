@@ -1,6 +1,15 @@
+*.autosave
+*.bak
+*.crt
 *.egg-info/
+*.key
+*.log
 *.pyc
+*.svn
 *.sw?
+*.tmp
+*~
+.DS_Store
 .idea
 .tox
 build/
@@ -8,3 +17,4 @@ dist/
 env/
 Pipfile.lock
 venv/
+.pytest_cache

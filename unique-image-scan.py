@@ -20,8 +20,9 @@ def get_exif(file):
 
 
 @click.command()
-@click.option("--scan", help="Files to scan", default=False)
-def scan(scan):
+@click.option("--debug", help="Enable debug options", is_flag=True)
+@click.option("--scan", help="Files to scan", required=True)
+def scan(scan, debug):
     files = list(pathlib.Path(scan).glob("**/[!.]*"))
     unique_exif = {}
     common_exif = set()

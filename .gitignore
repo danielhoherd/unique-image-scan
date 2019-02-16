@@ -1,0 +1,10 @@
+*.egg-info/
+*.pyc
+*.sw?
+.idea
+.tox
+build/
+dist/
+env/
+Pipfile.lock
+venv/

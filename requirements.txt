@@ -1,0 +1,2 @@
+Click==7.0
+PyExifTool==0.1.1

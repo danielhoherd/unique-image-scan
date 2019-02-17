@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import exiftool
+import hashlib
 import pathlib
 import pprint
 import progressbar
@@ -7,6 +8,23 @@ import progressbar
 import sys
 
 assert sys.version_info >= (3, 7, 0), "Python 3.7+ is required."
+
+BUF_SIZE = 65536
+
+def file_hash(file):
+    if not file:
+        return
+
+    sha256 = hashlib.sha256()
+
+    with open(file, 'rb') as f:
+        while True:
+            data = f.read(BUF_SIZE)
+            if not data:
+                break
+            sha256.update(data)
+
+    return sha256.hexdigest()
 
 
 def debug(text):
@@ -24,13 +42,15 @@ def get_exif(file):
 
 
 def scan_source_paths(source_paths):
-    files = []
+    results = []
     for path in source_paths:
-        files += list(pathlib.Path(path).glob("**/[!.]*"))
+        results += list(pathlib.Path(path).glob("**/[!.]*"))
+    files = [f for f in results if f.is_file()]
     unique_exif = {}
     common_exif = []
     index = 0
     total = len(files)
+    scanned = {}
 
     progress = progressbar.ProgressBar(max_value=total)
 
@@ -42,6 +62,16 @@ def scan_source_paths(source_paths):
             continue
 
         print(file)
+        scanned_key_check = (file.name, file.stat().st_size)
+        if scanned_key_check in scanned:
+            # We may have already scanned this file, let's see
+            previous_file_hash = file_hash(scanned[scanned_key_check])
+            current_file_hash = file_hash(str(file))
+            if previous_file_hash == current_file_hash:
+                # Let's be extra sure it's the same file
+                print(f'... Skipping, already scanned')
+                continue
+        scanned[(file.name, file.stat().st_size)] = str(file)
 
         exif = get_exif(str(file))
         if exif is None:
@@ -62,6 +92,7 @@ def scan_source_paths(source_paths):
     progress.finish()
 
     debug(unique_exif)
-    print("Final Summary of keys with unique values: " + "-" * 80)
+    uniq_count = len(unique_exif)
+    print(f"Final Summary of {uniq_count} keys with unique values: " + "-" * 80)
     for key in unique_exif.keys():
         print(key)

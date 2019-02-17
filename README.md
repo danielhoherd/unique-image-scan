@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/danielhoherd/unique-image-scan.svg?branch=master)](https://travis-ci.com/danielhoherd/unique-image-scan)
+
 # Unique Image Scan
 
 Scans the given paths for images and identify unique images.

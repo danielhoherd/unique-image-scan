@@ -3,6 +3,10 @@ import exiftool
 import pathlib
 import pprint
 
+import sys
+
+assert sys.version_info >= (3, 7, 0), "Python 3.7+ is required."
+
 
 def debug(text):
     if debug is True:

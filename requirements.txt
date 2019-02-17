@@ -1,3 +1,4 @@
 Click==7.0
 pre-commit>=1.14.3
+progressbar2
 PyExifTool==0.1.1

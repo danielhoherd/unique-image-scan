@@ -7,6 +7,8 @@ import progressbar
 
 import sys
 
+from unique_image_scan import models
+
 assert sys.version_info >= (3, 7, 0), "Python 3.7+ is required."
 
 BUF_SIZE = 65536
@@ -94,5 +96,10 @@ def scan_source_paths(source_paths):
     debug(unique_exif)
     uniq_count = len(unique_exif)
     print(f"Final Summary of {uniq_count} keys with unique values: " + "-" * 80)
+    session = models.create_session()
     for key in unique_exif.keys():
         print(key)
+        new_key = models.UniqueKey(name=key)
+        session.add(new_key)
+    session.commit()
+    session.close()

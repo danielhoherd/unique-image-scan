@@ -1,4 +1,5 @@
 -e .
 -r requirements.txt
+pre-commit>=1.14.3
 pytest
 requests

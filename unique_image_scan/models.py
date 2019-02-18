@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import arrow
 from sqlalchemy import Column
 from sqlalchemy import create_engine
@@ -10,17 +11,16 @@ from sqlalchemy.pool import StaticPool
 
 # Sets up the database for spider
 Base = declarative_base()
-engine = create_engine('sqlite:///data.db',
-    connect_args={'check_same_thread':False},
-    poolclass=StaticPool
-)
+engine = create_engine("sqlite:///data.db", connect_args={"check_same_thread": False}, poolclass=StaticPool)
 Base.metadata.bind = engine
 
+
 class UniqueKey(Base):
-    __tablename__ = 'unique_keys'
+    __tablename__ = "unique_keys"
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(Text, nullable=False, unique=True)
     created = Column(DateTime, default=arrow.utcnow().datetime)
+
 
 create_session = sessionmaker(bind=engine)
 

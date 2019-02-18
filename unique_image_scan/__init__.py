@@ -28,6 +28,10 @@ def file_hash(file):
 
     return sha256.hexdigest()
 
+import sys
+
+assert sys.version_info >= (3, 7, 0), "Python 3.7+ is required."
+
 
 def debug(text):
     if debug is True:

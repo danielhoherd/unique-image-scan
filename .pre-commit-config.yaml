@@ -1,3 +1,4 @@
+# We use http(s) urls so git auth is not required, eg for tests
 ---
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks

@@ -20,7 +20,7 @@ def main():
 
 @main.command()
 @click.argument("source_paths", nargs=-1, required=True)
-def scan(source_paths):
+def scan_exif(source_paths):
     """
     Scans the given paths for source images. Individual files are not allowed.
     """

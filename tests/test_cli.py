@@ -23,7 +23,7 @@ def test_cli(runner):
 
 
 def test_cli_with_arg(runner):
-    result = runner.invoke(cli.main, ["scan"])
+    result = runner.invoke(cli.main, ["scan-exif"])
     assert result.exception
     assert result.exit_code == 2
     assert re.search(r"Error: Missing argument", result.output)
@@ -36,5 +36,5 @@ def test_all_images(runner):
             tempdir = tempfile.mkdtemp()
             r = requests.get(image, allow_redirects=True)
             open(f"{tempdir}/{os.path.basename(image)}", "wb").write(r.content)
-            result = runner.invoke(cli.main, ["scan", tempdir])
+            result = runner.invoke(cli.main, ["scan-exif", tempdir])
             assert not result.exception

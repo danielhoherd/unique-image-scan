@@ -37,9 +37,10 @@ repos:
     hooks:
       - id: yamllint
   - repo: https://github.com/danielhoherd/pre-commit-hooks
-    rev: 1a5d4f6c75ca3eddb36979f0cb6cbc87d0990e74
+    rev: 9721876c54a94a87e4aaf99a44e3f6801ef95048
     hooks:
       - id: CVE-2017-18342
       - id: remove-unicode-non-breaking-spaces
       - id: remove-unicode-zero-width-non-breaking-spaces
       - id: remove-en-dashes
+      - id: sort-gitignore

@@ -11,10 +11,10 @@
 *~
 .DS_Store
 .idea
+.pytest_cache
 .tox
 build/
+data.db
 dist/
 env/
 venv/
-.pytest_cache
-data.db

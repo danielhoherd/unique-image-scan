@@ -1,6 +1,20 @@
 # We use http(s) urls so git auth is not required, eg for tests
 ---
 repos:
+  - repo: local
+    hooks:
+      - id: flynt
+        name: flynt
+        entry: flynt
+        args: ['--fail-on-change', '--quiet']
+        types: [python]
+        language: python
+        additional_dependencies: ['flynt']
+  - repo: https://github.com/ambv/black
+    rev: 19.3b0
+    hooks:
+      - id: black
+        args: ['-l', '132']
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.3.0
     hooks:
@@ -23,11 +37,6 @@ repos:
     rev: 1.0.5
     hooks:
       - id: shell-lint
-  - repo: https://github.com/ambv/black
-    rev: 19.3b0
-    hooks:
-      - id: black
-        args: ['-l', '132']
   - repo: https://github.com/Lucas-C/pre-commit-hooks
     rev: v1.1.7
     hooks:

@@ -11,11 +11,11 @@ Iterate through all photos, find exif fields that are truly unique (which may or
 
 # Installation
 
-pipx installs a python tool into its own virtualenv. Here are [installation instructions](https://github.com/pipxproject/pipx#install-pipx).
+This project attempts to follow poetry 1.x best practices.
 
 Simply run:
 
-    $ pipx install .
+    $ poetry install .
 
 
 # Usage
@@ -27,5 +27,5 @@ To use it:
 
 # Development
 
-    $ git clone git@github.com:danielhoherd/unique-image-scan.git
-    $ pipx install -e unique-image-scan
+    $ git clone git@github.com:danielhoherd/unique-image-scan.git && cd unique-image-scan
+    $ poetry install --dev
